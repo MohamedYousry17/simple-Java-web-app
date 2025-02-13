@@ -1,0 +1,11 @@
+- name: Deploy Docker Container
+  hosts: localhost
+  tasks:
+    - name: Stop old container
+      shell: docker stop simple-java-app || true
+
+    - name: Remove old container
+      shell: docker rm simple-java-app || true
+
+    - name: Run new container
+      shell: docker run -d --name simple-java-app -p 8080:8080 myousry009/simple-java-app:latest
