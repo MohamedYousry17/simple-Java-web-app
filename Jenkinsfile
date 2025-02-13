@@ -1,12 +1,12 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') 
+        DOCKER_IMAGE = 'myousry009/simple-java-app:latest'
     }
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/MohamedYousry17/simple-Java-web-app.git'
+                git branch: 'main', url: 'https://github.com/MohamedYousry17/simple-Java-web-app.git'
             }
         }
         stage('Build with Maven') {
@@ -21,13 +21,15 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t myousry009/simple-java-app:latest .'
+                sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
         stage('Push to Docker Hub') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push myousry009/simple-java-app:latest'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'docker push $DOCKER_IMAGE'
+                }
             }
         }
         stage('Deploy with Ansible') {
