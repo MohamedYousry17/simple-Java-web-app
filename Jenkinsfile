@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/MohamedYousry17/simple-Java-web-app.git'
+                git branch: 'master', url: 'https://github.com/MohamedYousry17/simple-Java-web-app.git'
             }
         }
         stage('Build with Maven') {
