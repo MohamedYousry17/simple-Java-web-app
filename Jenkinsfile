@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
 
-                 sh 'ansible-playbook -i inventory.ini run_container.yml'
+                 sh 'ansible-playbook -i inventory.ini site.yml'
                 }
             }
         }

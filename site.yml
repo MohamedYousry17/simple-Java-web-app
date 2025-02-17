@@ -16,6 +16,8 @@
 
 - name: Deploy Docker Container
   hosts: localhost
+  connection: local
+
   tasks:
     - name: Stop old container
       shell: docker stop jpetstore-app || true
