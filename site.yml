@@ -26,4 +26,4 @@
       shell: docker rm jpetstore-app || true
 
     - name: Run new container
-      shell: docker run -d --name jpetstore-app -p 8080:8081 myousry009/jpetstore-image:latest
+      shell: docker run -d --name jpetstore-app -p 8081:8080 myousry009/jpetstore-image:latest
